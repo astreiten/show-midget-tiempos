@@ -147,6 +147,26 @@ function App() {
         sx={{
           display: "flex",
           justifyContent: "center",
+        }}
+      >
+        <Button
+          variant="contained"
+          onClick={() => {
+            setSeriesCargadas([]);
+            setPositions([]);
+          }}
+          style={{ height: 50 }}
+        >
+          Clear all data
+        </Button>
+      </Grid>
+      <Grid
+        item
+        xs={12}
+        md={12}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
           margin: "0.5rem",
           height: imagePath && "10rem",
         }}
