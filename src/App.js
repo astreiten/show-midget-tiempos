@@ -32,7 +32,6 @@ function App() {
   const [log, setLog] = useState("");
 
   const renderSeriesChips = () => {
-    console.log(seriesCargadas);
     return seriesCargadas.map((serie, i) => {
       return (
         <Grid
@@ -42,6 +41,27 @@ function App() {
           md={4}
         >
           <Chip label={"Serie " + seriesCargadas[i]} color="success" />
+        </Grid>
+      );
+    });
+  };
+
+  const renderPositions = () => {
+    return positions.map((position, i) => {
+      return (
+        <Grid
+          item
+          sx={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}
+          xs={12}
+          md={12}
+        >
+          <Typography variant="h3">
+            {position.numero +
+              " " +
+              position.apellido +
+              " " +
+              position.tiempoFinal}
+          </Typography>
         </Grid>
       );
     });
@@ -192,6 +212,14 @@ function App() {
           sx={{ display: "flex", justifyContent: "center", margin: "0.5rem" }}
         >
           <Typography variant="h4">{log.status}</Typography>
+        </Grid>
+      </Grid>
+      <Grid item xs={12} md={2}>
+        <Grid
+          container
+          sx={{ display: "flex", justifyContent: "center", margin: "0.5rem" }}
+        >
+          {renderPositions()}
         </Grid>
       </Grid>
     </Grid>
