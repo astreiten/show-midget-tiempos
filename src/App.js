@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { Grid, Button, Select, MenuItem, Chip } from "@mui/material";
+import {
+  Grid,
+  Button,
+  Select,
+  MenuItem,
+  Chip,
+  Typography,
+} from "@mui/material";
 import Tesseract from "tesseract.js";
 import "./App.css";
 
@@ -22,6 +29,7 @@ function App() {
     []
   );
   const [positions, setPositions] = useLocalStorage("positions", []);
+  const [log, setLog] = useState("");
 
   const renderSeriesChips = () => {
     console.log(seriesCargadas);
@@ -86,10 +94,10 @@ function App() {
 
   const extractAndLoadSerie = () => {
     Tesseract.recognize(imagePath, "eng", {
-      logger: (m) => console.log(m),
+      logger: (m) => setLog(m),
     })
       .catch((err) => {
-        console.log("ERROR");
+        setLog("ERROR");
 
         console.error(err);
       })
@@ -177,6 +185,13 @@ function App() {
           >
             {renderSeriesChips()}
           </Grid>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sx={{ display: "flex", justifyContent: "center", margin: "0.5rem" }}
+        >
+          <Typography variant="h4">{log.status}</Typography>
         </Grid>
       </Grid>
     </Grid>
