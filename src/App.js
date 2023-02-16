@@ -26,7 +26,12 @@ function App() {
     console.log(seriesCargadas);
     return seriesCargadas.map((serie, i) => {
       return (
-        <Grid item sx={{ display: "flex", justifyContent: "center" }} md={4}>
+        <Grid
+          item
+          sx={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}
+          xs={4}
+          md={4}
+        >
           <Chip label={"Serie " + seriesCargadas[i]} color="success" />
         </Grid>
       );
@@ -105,19 +110,35 @@ function App() {
 
   return (
     <Grid container direction="row" justifyContent="center" alignItems="center">
-      <Grid item md={12}>
+      <Grid item xs={12} md={12}>
         <h3 style={{ textAlign: "center" }}>Carga de Serie Clasificatoria</h3>
       </Grid>
-      <Grid item md={12}>
+      <Grid
+        item
+        xs={12}
+        md={12}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          margin: "0.5rem",
+          height: imagePath && "10rem",
+        }}
+      >
         {imagePath && <img src={imagePath} className="App-image" alt="logo" />}
       </Grid>
-      <Grid sx={{ display: "flex", justifyContent: "center" }} item md={12}>
+      <Grid
+        sx={{ display: "flex", justifyContent: "center" }}
+        item
+        xs={12}
+        md={12}
+      >
         <input type="file" onChange={handleChange} />
       </Grid>
       <Grid container>
         <Grid
           item
           sx={{ display: "flex", justifyContent: "center", margin: "0.5rem" }}
+          xs={12}
           md={12}
         >
           <Select
@@ -134,7 +155,12 @@ function App() {
             <MenuItem value={2}>Serie 2</MenuItem>
           </Select>
         </Grid>
-        <Grid item sx={{ display: "flex", justifyContent: "center" }} md={12}>
+        <Grid
+          item
+          sx={{ display: "flex", justifyContent: "center" }}
+          xs={12}
+          md={12}
+        >
           <Button
             variant="contained"
             onClick={extractAndLoadSerie}
@@ -145,7 +171,7 @@ function App() {
           </Button>
         </Grid>
 
-        <Grid item md={2} sx={{ marginLeft: "50rem" }}>
+        <Grid item xs={10} md={2}>
           <Grid
             container
             sx={{ display: "flex", justifyContent: "center", margin: "0.5rem" }}
