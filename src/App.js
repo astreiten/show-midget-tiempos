@@ -21,6 +21,7 @@ function App() {
     "seriescargadas",
     []
   );
+  const [positions, setPositions] = useLocalStorage("positions", []);
 
   const renderSeriesChips = () => {
     console.log(seriesCargadas);
@@ -94,13 +95,11 @@ function App() {
       })
       .then((result) => {
         console.log(result.data.lines);
-        const str = localStorage.getItem("test");
-        const existingPositions = JSON.parse(str);
-        let positions = buildPositions(filterFilas(result.data.lines));
-        console.log(positions);
-        let newPositions = sortPositions(existingPositions.concat(positions));
-        const jsonArray = JSON.stringify(newPositions);
-        localStorage.setItem("test", jsonArray);
+        let positionsSerieNueva = buildPositions(
+          filterFilas(result.data.lines)
+        );
+        let newPositions = sortPositions(positions.concat(positionsSerieNueva));
+        setPositions(newPositions);
         let oldSeriesCargadas = seriesCargadas;
         setSeriesCargadas(oldSeriesCargadas.concat([serie]));
         setSerie("");
