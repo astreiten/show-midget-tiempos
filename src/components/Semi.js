@@ -6,8 +6,10 @@ export const Semi = ({ positions, number }) => {
   return (
     <>
       <Grid container direction="column">
-        <Grid item xs={12} sx={{ textAlign: "center" }}>
-          <Typography>SEMI {number}</Typography>
+        <Grid item xs={12} sx={{ textAlign: "center", marginTop: "0.5rem" }}>
+          <Typography sx={{ fontWeight: "bolder" }} variant="h6">
+            SEMI {number}
+          </Typography>
         </Grid>
         <Fila
           pilotos={[
@@ -26,11 +28,6 @@ export const Semi = ({ positions, number }) => {
           ]}
         />
         <Fila pilotos={[positions[base + 32], positions[base + 36]]} />
-        <Grid item>
-          <Divider
-            sx={{ marginTop: "0.5rem", borderTop: "5px solid #8c8b8b" }}
-          />
-        </Grid>
       </Grid>
     </>
   );

@@ -1,4 +1,4 @@
-import { Grid, Switch, IconButton } from "@mui/material";
+import { Grid, Switch } from "@mui/material";
 
 export const NavBar = ({ viewMode, setViewMode }) => {
   return (
@@ -9,6 +9,7 @@ export const NavBar = ({ viewMode, setViewMode }) => {
     >
       <Grid item xs={2}>
         <Switch
+          color="default"
           checked={viewMode}
           onChange={(e) => setViewMode(e.target.checked)}
         />

@@ -9,9 +9,14 @@ import {
   IconButton,
 } from "@mui/material";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Tesseract from "tesseract.js";
 import { useLocalStorage } from "./utils/hooks";
 import { sortPositionsAux, filterFilas, buildPositions } from "./utils/utils";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+import TablaTiempos from "./components/TablaTiempos";
+import { SelectComponent } from "./components/Select";
 
 export const Form = ({ positions, setPositions }) => {
   const [imagePath, setImagePath] = useState("");
@@ -21,6 +26,7 @@ export const Form = ({ positions, setPositions }) => {
     []
   );
   const [log, setLog] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const renderSeriesChips = () => {
     return seriesCargadas.map((serie, i) => {
@@ -67,6 +73,7 @@ export const Form = ({ positions, setPositions }) => {
   };
 
   const extractAndLoadSerie = () => {
+    setLoading(true);
     Tesseract.recognize(imagePath, "eng", {
       logger: (m) => setLog(m),
     })
@@ -76,7 +83,6 @@ export const Form = ({ positions, setPositions }) => {
         console.error(err);
       })
       .then((result) => {
-        console.log(result.data.lines);
         let positionsSerieNueva = buildPositions(
           filterFilas(result.data.lines)
         );
@@ -86,32 +92,13 @@ export const Form = ({ positions, setPositions }) => {
         setSeriesCargadas(oldSeriesCargadas.concat([serie]));
         setSerie("");
         setImagePath("");
+        setLoading(false);
       });
   };
   return (
     <>
       <Grid item xs={12} md={12}>
         <h3 style={{ textAlign: "center" }}>Carga de Serie Clasificatoria</h3>
-      </Grid>
-      <Grid
-        item
-        xs={12}
-        md={12}
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <Button
-          variant="contained"
-          onClick={() => {
-            setSeriesCargadas([]);
-            setPositions([]);
-          }}
-          style={{ height: 50 }}
-        >
-          Clear all data
-        </Button>
       </Grid>
       <Grid
         item
@@ -129,7 +116,7 @@ export const Form = ({ positions, setPositions }) => {
       <Grid
         sx={{ display: "flex", justifyContent: "center" }}
         item
-        xs={12}
+        xs={4}
         md={12}
       >
         <Button variant="contained" component="label">
@@ -145,39 +132,36 @@ export const Form = ({ positions, setPositions }) => {
           <PhotoCamera />
         </IconButton>
       </Grid>
+      <Grid
+        item
+        sx={{ display: "flex", justifyContent: "center", margin: "0.5rem" }}
+        xs={3}
+        md={12}
+      >
+        <SelectComponent serie={serie} setSerie={setSerie} />
+      </Grid>
       <Grid container>
-        <Grid
-          item
-          sx={{ display: "flex", justifyContent: "center", margin: "0.5rem" }}
-          xs={12}
-          md={12}
-        >
-          <Select
-            sx={{ width: "7rem" }}
-            value={serie}
-            variant="filled"
-            onChange={(event) => {
-              setSerie(event.target.value);
-            }}
-          >
-            <MenuItem value={1}>Serie 1</MenuItem>
-            <MenuItem value={2}>Serie 2</MenuItem>
-          </Select>
-        </Grid>
         <Grid
           item
           sx={{ display: "flex", justifyContent: "center" }}
           xs={12}
           md={12}
         >
-          <Button
-            variant="contained"
-            onClick={extractAndLoadSerie}
-            style={{ height: 50 }}
-            disabled={!serie || !imagePath}
-          >
-            Cargar serie
-          </Button>
+          {loading ? (
+            <Box sx={{ display: "flex" }}>
+              <CircularProgress />
+            </Box>
+          ) : (
+            <Button
+              variant="contained"
+              color="info"
+              onClick={extractAndLoadSerie}
+              style={{ height: 50 }}
+              disabled={!serie || !imagePath}
+            >
+              Cargar serie
+            </Button>
+          )}
         </Grid>
 
         <Grid item xs={12} md={12}>
@@ -196,23 +180,33 @@ export const Form = ({ positions, setPositions }) => {
               }}
             >
               {renderSeriesChips()}
+              {positions.length > 0 && (
+                <Grid
+                  item
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: "0.5rem",
+                  }}
+                >
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => {
+                      setSeriesCargadas([]);
+                      setPositions([]);
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>{" "}
+                </Grid>
+              )}
             </Grid>
           </Grid>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          sx={{ display: "flex", justifyContent: "center", margin: "0.5rem" }}
-        >
-          <Typography variant="h4">{log.status}</Typography>
-        </Grid>
       </Grid>
-      <Grid item xs={12} md={2}>
-        <Grid
-          container
-          sx={{ display: "flex", justifyContent: "center", margin: "0.5rem" }}
-        >
-          {renderPositions()}
+      <Grid item xs={11} md={2}>
+        <Grid container sx={{ display: "flex", justifyContent: "center" }}>
+          {positions.length > 0 && <TablaTiempos posiciones={positions} />}
         </Grid>
       </Grid>
     </>
