@@ -5,7 +5,7 @@ export const NavBar = ({ viewMode, setViewMode }) => {
     <Grid
       container
       direction="row"
-      sx={{ height: "5rem", background: "#8d99ae" }}
+      sx={{ height: "5rem", background: "#adb5bd" }}
     >
       <Grid item xs={2}>
         <Switch

@@ -12,7 +12,7 @@ function App() {
   return (
     <div
       style={{
-        background: "#edf2f4",
+        background: "#dee2e6",
         height: "fit-content",
         minHeight: "60rem",
       }}
