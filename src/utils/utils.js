@@ -34,3 +34,7 @@ export const buildPositions = (filas) => {
     };
   });
 };
+
+export function isSerieCargada(i, seriesCargadas) {
+  return seriesCargadas.find((e) => e === i);
+}

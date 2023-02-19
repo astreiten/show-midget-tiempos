@@ -1,13 +1,5 @@
 import { useState } from "react";
-import {
-  Grid,
-  Button,
-  Select,
-  MenuItem,
-  Chip,
-  Typography,
-  IconButton,
-} from "@mui/material";
+import { Grid, Button, Chip, IconButton } from "@mui/material";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Tesseract from "tesseract.js";
@@ -17,6 +9,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import TablaTiempos from "./components/TablaTiempos";
 import { SelectComponent } from "./components/Select";
+import { SeriesCheck } from "./components/SeriesCheck";
 
 export const Form = ({ positions, setPositions }) => {
   const [imagePath, setImagePath] = useState("");
@@ -27,42 +20,6 @@ export const Form = ({ positions, setPositions }) => {
   );
   const [log, setLog] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const renderSeriesChips = () => {
-    return seriesCargadas.map((serie, i) => {
-      return (
-        <Grid
-          item
-          sx={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}
-          xs={4}
-          md={4}
-        >
-          <Chip label={"Serie " + seriesCargadas[i]} color="success" />
-        </Grid>
-      );
-    });
-  };
-
-  const renderPositions = () => {
-    return positions.map((position, i) => {
-      return (
-        <Grid
-          item
-          sx={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}
-          xs={12}
-          md={12}
-        >
-          <Typography variant="h3">
-            {position.numero +
-              " " +
-              position.apellido +
-              " " +
-              position.tiempoFinal}
-          </Typography>
-        </Grid>
-      );
-    });
-  };
 
   const handleChange = (event) => {
     setImagePath(URL.createObjectURL(event.target.files[0]));
@@ -138,7 +95,11 @@ export const Form = ({ positions, setPositions }) => {
         xs={3}
         md={12}
       >
-        <SelectComponent serie={serie} setSerie={setSerie} />
+        <SelectComponent
+          serie={serie}
+          setSerie={setSerie}
+          seriesCargadas={seriesCargadas}
+        />
       </Grid>
       <Grid container>
         <Grid
@@ -163,7 +124,6 @@ export const Form = ({ positions, setPositions }) => {
             </Button>
           )}
         </Grid>
-
         <Grid item xs={12} md={12}>
           <Grid
             container
@@ -171,36 +131,7 @@ export const Form = ({ positions, setPositions }) => {
             alignItems="center"
             justifyContent="center"
           >
-            <Grid
-              container
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                margin: "0.5rem",
-              }}
-            >
-              {renderSeriesChips()}
-              {positions.length > 0 && (
-                <Grid
-                  item
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    marginTop: "0.5rem",
-                  }}
-                >
-                  <IconButton
-                    aria-label="delete"
-                    onClick={() => {
-                      setSeriesCargadas([]);
-                      setPositions([]);
-                    }}
-                  >
-                    <DeleteIcon />
-                  </IconButton>{" "}
-                </Grid>
-              )}
-            </Grid>
+            <SeriesCheck seriesCargadas={seriesCargadas} />
           </Grid>
         </Grid>
       </Grid>
@@ -209,6 +140,19 @@ export const Form = ({ positions, setPositions }) => {
           {positions.length > 0 && <TablaTiempos posiciones={positions} />}
         </Grid>
       </Grid>
+      {seriesCargadas.length > 0 && (
+        <Grid item>
+          <IconButton
+            aria-label="delete"
+            onClick={() => {
+              setSeriesCargadas([]);
+              setPositions([]);
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Grid>
+      )}
     </>
   );
 };

@@ -3,13 +3,18 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { render } from "@testing-library/react";
+import { isSerieCargada } from "../utils/utils";
 
-export const SelectComponent = ({ serie, setSerie }) => {
+export const SelectComponent = ({ serie, setSerie, seriesCargadas }) => {
   function renderOptions() {
     let options = [];
     for (var i = 1; i < 13; i++) {
-      options.push(<MenuItem value={i}>Serie {i}</MenuItem>);
+      if (!isSerieCargada(i, seriesCargadas))
+        options.push(
+          <MenuItem key={i} value={i}>
+            Serie {i}
+          </MenuItem>
+        );
     }
     return options;
   }
