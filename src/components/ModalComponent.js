@@ -23,6 +23,8 @@ export const ModalComponent = ({
   setOpenModal,
   posicionesSerie,
   confirmSerieLoad,
+  cancelSerieLoad,
+  imagePath,
 }) => {
   return (
     <Modal
@@ -31,9 +33,15 @@ export const ModalComponent = ({
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
+        <Typography
+          variant="h6"
+          fontSize={16}
+          fontWeight={"bold"}
+          textAlign="center"
+        >
           Confirmar resultados procesados
         </Typography>
+        {imagePath && <img style={{ width: "18rem" }} src={imagePath} alt="" />}
         <TablaTiempos posiciones={posicionesSerie} />
         <Grid
           container
@@ -59,6 +67,7 @@ export const ModalComponent = ({
               variant="contained"
               color="error"
               onClick={() => {
+                cancelSerieLoad();
                 setOpenModal(false);
               }}
             >

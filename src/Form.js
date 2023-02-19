@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Grid, Button, Chip, IconButton } from "@mui/material";
+import { Grid, Button, IconButton, Typography } from "@mui/material";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Tesseract from "tesseract.js";
@@ -49,6 +49,13 @@ export const Form = ({ positions, setPositions }) => {
     setPosicionesSerieTemp([]);
   };
 
+  const cancelSerieLoad = () => {
+    setSerie("");
+    setImagePath("");
+    setLoading(false);
+    setPosicionesSerieTemp([]);
+  };
+
   const extractAndLoadSerie = () => {
     setLoading(true);
     Tesseract.recognize(imagePath, "eng", {
@@ -73,9 +80,16 @@ export const Form = ({ positions, setPositions }) => {
         setOpenModal={setOpenModal}
         posicionesSerie={posicionesSerieTemp}
         confirmSerieLoad={confirmSerieLoad}
+        cancelSerieLoad={cancelSerieLoad}
+        imagePath={imagePath}
       ></ModalComponent>
       <Grid item xs={12} md={12}>
-        <h3 style={{ textAlign: "center" }}>Carga de Serie Clasificatoria</h3>
+        <Typography
+          variant="h5"
+          sx={{ textAlign: "center", fontWeight: "600", marginTop: "0.5rem" }}
+        >
+          Carga de Serie Clasificatoria
+        </Typography>
       </Grid>
       <Grid
         item
@@ -90,38 +104,53 @@ export const Form = ({ positions, setPositions }) => {
       >
         {imagePath && <img src={imagePath} className="App-image" alt="logo" />}
       </Grid>
+
       <Grid
-        sx={{ display: "flex", justifyContent: "center" }}
-        item
-        xs={4}
-        md={12}
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        sx={{
+          background: "white",
+          marginRight: "1rem",
+          marginLeft: "1rem",
+          padding: "0.5rem",
+          borderRadius: "1rem",
+        }}
       >
-        <Button variant="contained" component="label">
-          Upload
-          <input hidden type="file" onChange={handleChange} />
-        </Button>
-        <IconButton
-          color="primary"
-          aria-label="upload picture"
-          component="label"
+        <Grid
+          sx={{ display: "flex", justifyContent: "center" }}
+          item
+          xs={4}
+          md={12}
         >
-          <input hidden accept="image/*" type="file" />
-          <PhotoCamera />
-        </IconButton>
-      </Grid>
-      <Grid
-        item
-        sx={{ display: "flex", justifyContent: "center", margin: "0.5rem" }}
-        xs={3}
-        md={12}
-      >
-        <SelectComponent
-          serie={serie}
-          setSerie={setSerie}
-          seriesCargadas={seriesCargadas}
-        />
-      </Grid>
-      <Grid container>
+          <Button variant="contained" component="label">
+            Upload
+            <input hidden type="file" onChange={handleChange} />
+          </Button>
+          <IconButton
+            color="primary"
+            aria-label="upload picture"
+            component="label"
+          >
+            <input hidden accept="image/*" type="file" />
+            <PhotoCamera />
+          </IconButton>
+        </Grid>
+
+        <Grid
+          item
+          sx={{ display: "flex", justifyContent: "center", margin: "0.5rem" }}
+          xs={3}
+          md={12}
+        >
+          <SelectComponent
+            serie={serie}
+            setSerie={setSerie}
+            seriesCargadas={seriesCargadas}
+          />
+        </Grid>
+
         <Grid
           item
           sx={{ display: "flex", justifyContent: "center" }}
@@ -144,17 +173,19 @@ export const Form = ({ positions, setPositions }) => {
             </Button>
           )}
         </Grid>
-        <Grid item xs={12} md={12}>
-          <Grid
-            container
-            direction="column"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <SeriesCheck seriesCargadas={seriesCargadas} />
-          </Grid>
+      </Grid>
+
+      <Grid item xs={12} md={12}>
+        <Grid
+          container
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <SeriesCheck seriesCargadas={seriesCargadas} />
         </Grid>
       </Grid>
+
       <Grid item xs={11} md={2}>
         <Grid container sx={{ display: "flex", justifyContent: "center" }}>
           {positions.length > 0 && <TablaTiempos posiciones={positions} />}
