@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Grid, Button, Chip, IconButton } from "@mui/material";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import TablaTiempos from "./components/TablaTiempos";
 import { SelectComponent } from "./components/Select";
 import { SeriesCheck } from "./components/SeriesCheck";
+import { ModalComponent } from "./components/ModalComponent";
 
 export const Form = ({ positions, setPositions }) => {
   const [imagePath, setImagePath] = useState("");
@@ -20,6 +21,8 @@ export const Form = ({ positions, setPositions }) => {
   );
   const [log, setLog] = useState("");
   const [loading, setLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [posicionesSerieTemp, setPosicionesSerieTemp] = useState([]);
 
   const handleChange = (event) => {
     setImagePath(URL.createObjectURL(event.target.files[0]));
@@ -27,6 +30,23 @@ export const Form = ({ positions, setPositions }) => {
 
   const sortPositions = (positions) => {
     return positions.sort(sortPositionsAux);
+  };
+
+  useEffect(() => {
+    if (posicionesSerieTemp.length > 0) {
+      setOpenModal(true);
+    }
+  }, [posicionesSerieTemp]);
+
+  const confirmSerieLoad = () => {
+    let newPositions = sortPositions(positions.concat(posicionesSerieTemp));
+    setPositions(newPositions);
+    let oldSeriesCargadas = seriesCargadas;
+    setSeriesCargadas(oldSeriesCargadas.concat([serie]));
+    setSerie("");
+    setImagePath("");
+    setLoading(false);
+    setPosicionesSerieTemp([]);
   };
 
   const extractAndLoadSerie = () => {
@@ -43,17 +63,17 @@ export const Form = ({ positions, setPositions }) => {
         let positionsSerieNueva = buildPositions(
           filterFilas(result.data.lines)
         );
-        let newPositions = sortPositions(positions.concat(positionsSerieNueva));
-        setPositions(newPositions);
-        let oldSeriesCargadas = seriesCargadas;
-        setSeriesCargadas(oldSeriesCargadas.concat([serie]));
-        setSerie("");
-        setImagePath("");
-        setLoading(false);
+        setPosicionesSerieTemp(positionsSerieNueva);
       });
   };
   return (
     <>
+      <ModalComponent
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        posicionesSerie={posicionesSerieTemp}
+        confirmSerieLoad={confirmSerieLoad}
+      ></ModalComponent>
       <Grid item xs={12} md={12}>
         <h3 style={{ textAlign: "center" }}>Carga de Serie Clasificatoria</h3>
       </Grid>
