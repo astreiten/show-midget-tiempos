@@ -66,6 +66,7 @@ export const Form = ({ positions, setPositions }) => {
         console.error(err);
       })
       .then((result) => {
+        //console.log(result);
         let positionsSerieNueva = buildPositions(
           filterFilas(result.data.lines)
         );
@@ -101,7 +102,14 @@ export const Form = ({ positions, setPositions }) => {
           height: imagePath && "10rem",
         }}
       >
-        {imagePath && <img src={imagePath} className="App-image" alt="logo" />}
+        {imagePath && (
+          <img
+            src={imagePath}
+            className="App-image"
+            alt="logo"
+            style={{ width: "90%" }}
+          />
+        )}
       </Grid>
 
       <Grid

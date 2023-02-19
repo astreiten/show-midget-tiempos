@@ -14,7 +14,16 @@ export function sortPositionsAux(positionA, positionB) {
 
 export const filterFilas = (filas) => {
   return filas.filter((fila) => {
-    return isNumeric(fila.words[0].text);
+    return (
+      isNumeric(fila.words[0].text) &&
+      !fila.words[
+        fila.words.lastIndexOf(
+          fila.words.findLast((element) => {
+            return element.text.startsWith("99:");
+          })
+        )
+      ]
+    );
   });
 };
 
