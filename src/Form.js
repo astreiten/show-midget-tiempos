@@ -19,7 +19,7 @@ export const Form = ({ positions, setPositions }) => {
     "seriescargadas",
     []
   );
-  const [log, setLog] = useState("");
+  //const [log, setLog] = useState("");
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [posicionesSerieTemp, setPosicionesSerieTemp] = useState([]);
@@ -59,11 +59,10 @@ export const Form = ({ positions, setPositions }) => {
   const extractAndLoadSerie = () => {
     setLoading(true);
     Tesseract.recognize(imagePath, "eng", {
-      logger: (m) => setLog(m),
+      //logger: (m) => setLog(m),
     })
       .catch((err) => {
-        setLog("ERROR");
-
+        //setLog("ERROR");
         console.error(err);
       })
       .then((result) => {
