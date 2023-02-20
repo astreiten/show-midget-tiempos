@@ -10,7 +10,7 @@ export default function Casilla({ value, cargada }) {
         sx={{
           height: "2rem",
           width: "100%",
-          background: cargada ? "green" : "red",
+          background: cargada ? "#0ead69" : "#d90429",
           borderRadius: "0",
           textAlign: "center",
         }}

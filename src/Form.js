@@ -59,7 +59,7 @@ export const Form = ({ positions, setPositions }) => {
   const extractAndLoadSerie = () => {
     setLoading(true);
     Tesseract.recognize(imagePath, "eng", {
-      //logger: (m) => setLog(m),
+      //logger: (m) => console.log(m),
     })
       .catch((err) => {
         //setLog("ERROR");

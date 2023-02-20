@@ -16,10 +16,18 @@ export const filterFilas = (filas) => {
   return filas.filter((fila) => {
     return (
       isNumeric(fila.words[0].text) &&
+      fila.words[fila.words.length - 1].text === "05" &&
       !fila.words[
         fila.words.lastIndexOf(
           fila.words.findLast((element) => {
             return element.text.startsWith("99:");
+          })
+        )
+      ] &&
+      !fila.words[
+        fila.words.lastIndexOf(
+          fila.words.findLast((element) => {
+            return element.text.startsWith("00:");
           })
         )
       ]
