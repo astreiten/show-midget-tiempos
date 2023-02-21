@@ -82,6 +82,7 @@ export const Form = ({ positions, setPositions }) => {
         confirmSerieLoad={confirmSerieLoad}
         cancelSerieLoad={cancelSerieLoad}
         imagePath={imagePath}
+        serie={serie}
       ></ModalComponent>
       <Grid item xs={12} md={12}>
         <Typography

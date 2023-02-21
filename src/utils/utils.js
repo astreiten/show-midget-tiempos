@@ -35,11 +35,17 @@ export const filterFilas = (filas) => {
   });
 };
 
+function getApellido(fila) {
+  if (fila.words[1].text.length <= 2)
+    return fila.words[1].text + " " + fila.words[2].text;
+  else return fila.words[1].text;
+}
+
 export const buildPositions = (filas) => {
   return filas.map((fila) => {
     return {
       numero: fila.words[0].text,
-      apellido: fila.words[1].text,
+      apellido: getApellido(fila),
       tiempoFinal:
         fila.words[
           fila.words.lastIndexOf(

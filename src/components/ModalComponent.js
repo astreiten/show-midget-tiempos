@@ -25,6 +25,7 @@ export const ModalComponent = ({
   confirmSerieLoad,
   cancelSerieLoad,
   imagePath,
+  serie,
 }) => {
   return (
     <Modal
@@ -39,7 +40,7 @@ export const ModalComponent = ({
           fontWeight={"bold"}
           textAlign="center"
         >
-          Confirmar resultados procesados
+          {"Confirmar resultados serie " + serie}
         </Typography>
         {imagePath && <img style={{ width: "18rem" }} src={imagePath} alt="" />}
         <TablaTiempos posiciones={posicionesSerie} />

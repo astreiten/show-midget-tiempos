@@ -21,7 +21,10 @@ export default function TablaTiempos({ posiciones }) {
           {posiciones.map((posicion, i) => (
             <TableRow
               key={i}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              sx={{
+                "&:last-child td, &:last-child th": { border: 0 },
+                backgroundColor: posicion.numero === "147" && "#ED2124",
+              }}
             >
               <TableCell component="th" scope="row">
                 {i + 1 + ") " + posicion.numero + "-" + posicion.apellido}
