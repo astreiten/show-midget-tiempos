@@ -6,11 +6,16 @@ import Typography from "@mui/material/Typography";
 export default function Cajon({ piloto }) {
   return (
     <Card sx={{ height: "6rem", width: "6rem", textAlign: "center" }}>
-      <CardContent>
+      <CardContent sx={{ width: "100%", padding: "1px", paddingTop: "12px" }}>
         <Typography sx={{ fontSize: 30, fontWeight: "800" }}>
           {piloto && piloto.numero}
         </Typography>
-        <Typography sx={{ fontSize: 11, fontWeight: "600" }}>
+        <Typography
+          sx={{
+            fontSize: 11,
+            fontWeight: "600",
+          }}
+        >
           {piloto && piloto.apellido}
         </Typography>
       </CardContent>
