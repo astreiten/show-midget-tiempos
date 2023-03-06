@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import TablaTiempos from "./TablaTiempos";
+import TablaCargaTiempos from "./TablaCargaTiempos";
 import { Grid } from "@mui/material";
 
 const style = {
@@ -43,7 +43,7 @@ export const ModalComponent = ({
           {"Confirmar resultados serie " + serie}
         </Typography>
         {imagePath && <img style={{ width: "18rem" }} src={imagePath} alt="" />}
-        <TablaTiempos posiciones={posicionesSerie} />
+        <TablaCargaTiempos posiciones={posicionesSerie} />
         <Grid
           container
           alignItems="center"
