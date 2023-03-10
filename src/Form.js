@@ -79,6 +79,7 @@ export const Form = ({ positions, setPositions }) => {
         openModal={openModal}
         setOpenModal={setOpenModal}
         posicionesSerie={posicionesSerieTemp}
+        setPosicionesSerie={setPosicionesSerieTemp}
         confirmSerieLoad={confirmSerieLoad}
         cancelSerieLoad={cancelSerieLoad}
         imagePath={imagePath}

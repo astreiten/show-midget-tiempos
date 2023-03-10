@@ -1,7 +1,7 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 
-export default function TablaCargaTiempos({ posiciones }) {
+export default function TablaCargaTiempos({ posiciones, setPosicionesSerie }) {
   const [posicionesTabla, setPosicionesTabla] = React.useState([]);
   const columns = [
     { field: "piloto", headerName: "Piloto", width: 180, editable: false },
@@ -19,9 +19,22 @@ export default function TablaCargaTiempos({ posiciones }) {
     setPosicionesTabla(posicionesAux);
   }, [posiciones]);
 
+  const handleRowChange = (newRow) => {
+    let newPos = posiciones;
+    newPos[newRow.id].tiempoFinal = newRow.tiempo;
+    setPosicionesSerie(newPos);
+  };
+
   return (
     <div style={{ height: 300, width: "100%" }}>
-      <DataGrid rows={posicionesTabla} columns={columns} />
+      <DataGrid
+        rows={posicionesTabla}
+        columns={columns}
+        processRowUpdate={handleRowChange}
+        onProcessRowUpdateError={(error) => {
+          console.log(error);
+        }}
+      />
     </div>
   );
 }

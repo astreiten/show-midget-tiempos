@@ -22,6 +22,7 @@ export const ModalComponent = ({
   openModal,
   setOpenModal,
   posicionesSerie,
+  setPosicionesSerie,
   confirmSerieLoad,
   cancelSerieLoad,
   imagePath,
@@ -43,7 +44,10 @@ export const ModalComponent = ({
           {"Confirmar resultados serie " + serie}
         </Typography>
         {imagePath && <img style={{ width: "18rem" }} src={imagePath} alt="" />}
-        <TablaCargaTiempos posiciones={posicionesSerie} />
+        <TablaCargaTiempos
+          posiciones={posicionesSerie}
+          setPosicionesSerie={setPosicionesSerie}
+        />
         <Grid
           container
           alignItems="center"
