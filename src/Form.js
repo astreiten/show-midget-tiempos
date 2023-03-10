@@ -23,6 +23,7 @@ export const Form = ({ positions, setPositions }) => {
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [posicionesSerieTemp, setPosicionesSerieTemp] = useState([]);
+  const [progress, setProgress] = useState(0);
 
   const handleChange = (event) => {
     setImagePath(URL.createObjectURL(event.target.files[0]));
@@ -59,7 +60,7 @@ export const Form = ({ positions, setPositions }) => {
   const extractAndLoadSerie = () => {
     setLoading(true);
     Tesseract.recognize(imagePath, "eng", {
-      logger: (m) => console.log(m),
+      logger: (m) => setProgress(m.progress * 100),
     })
       .catch((err) => {
         //setLog("ERROR");
@@ -168,7 +169,7 @@ export const Form = ({ positions, setPositions }) => {
         >
           {loading ? (
             <Box sx={{ display: "flex" }}>
-              <CircularProgress />
+              <CircularProgress variant="determinate" value={progress} />
             </Box>
           ) : (
             <Button
